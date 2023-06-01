@@ -1,0 +1,16 @@
+function enviarEmailsEmMassa() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+  
+  for (var i = 1; i < data.length; i++) {
+    var email = data[i][11];
+    if (email && email !== '') {
+      var empenho = data[i][4];
+      var valor = data[i][9];
+      var corpo = "Senhores,\n\nIdentificamos empenho(s) emitido(s) pela Pró-reitoria de Pesquisa (CNPJ: 28.523.215/0033-93) com saldo(s) em aberto e gostaríamos de confirmar com vocês a situação deste(s).\n\nSegue abaixo quadro resumo deste(s) empenho(s) para que vocês nos informem, caso ainda haja interesse em atender nosso pedido, uma programação de entrega do mesmo:\n\nEMPENHO: " + empenho + "\nVALOR: R$ " + valor + "\nPROGRAMAÇÃO DE ENTREGA (data)\n\nObservação: No caso de materiais entregues/ serviços prestados, solicitamos o envio da nota fiscal correspondente e um canhoto com assinatura do recebedor, para que possamos verificar a situação e prosseguir com os trâmites.";
+      var assunto = "Confirmação de empenho em aberto";
+      MailApp.sendEmail(email, assunto, corpo);
+    }
+  }
+}
+
